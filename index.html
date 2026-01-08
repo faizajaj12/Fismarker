@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiz Market</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0d0d0d;color:#eee}
+#loading{position:fixed;width:100%;height:100vh;background:black;display:flex;align-items:center;justify-content:center;font-size:24px;z-index:9}
+#auth{max-width:350px;margin:120px auto;background:#1b1b1b;padding:25px;border-radius:10px}
+input,select,button{width:100%;padding:10px;margin:8px 0;border:none;border-radius:5px}
+button{background:#333;color:#fff;cursor:pointer}
+button:hover{background:#555}
+#website{display:none}
+
+/* HEADER */
+header{
+    background:#1a1a1a;
+    padding:15px;
+    text-align:center;
+}
+header h1{
+    font-size:26px;
+}
+#datetime{
+    font-size:14px;
+    margin-top:5px;
+    color:#aaa;
+}
+
+/* CONTENT */
+.container{max-width:900px;margin:auto;padding:20px}
+.product{background:#1f1f1f;padding:15px;margin-bottom:15px;border-radius:8px}
+
+/* MODAL */
+#modal{display:none;position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,.7);align-items:center;justify-content:center}
+.modal-box{background:#1e1e1e;padding:20px;width:90%;max-width:400px;border-radius:10px}
+.qris{text-align:center;margin-top:15px}
+.qris img{max-width:220px;border-radius:8px}
+.whatsapp{text-align:center;margin-top:15px}
+.whatsapp a{background:#25D366;color:black;padding:10px 15px;border-radius:6px;text-decoration:none;font-weight:bold}
+</style>
+</head>
+
+<body>
+
+<div id="loading">Loading Fiz Market...</div>
+
+<!-- LOGIN -->
+<div id="auth">
+<h2>Login / Daftar</h2>
+<input id="user" placeholder="Username">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="login()">Masuk</button>
+</div>
+
+<!-- WEBSITE -->
+<div id="website">
+<header>
+<h1>Fiz Market</h1>
+<div id="datetime"></div>
+</header>
+
+<div class="container">
+
+<div class="product"><h3>APK BUG</h3><button onclick="openModal('apkbug')">Beli Sekarang</button></div>
+<div class="product"><h3>Fle Drag HS</h3><button onclick="openModal('fledrag')">Beli Sekarang</button></div>
+<div class="product"><h3>Fle Badan HS</h3><button onclick="openModal('flebadan')">Beli Sekarang</button></div>
+<div class="product"><h3>Dada HS</h3><button onclick="openModal('dadahs')">Beli Sekarang</button></div>
+<div class="product"><h3>APK Banned WhatsApp</h3><button onclick="openModal('bannedwa')">Beli Sekarang</button></div>
+<div class="product"><h3>Sewa BOT WhatsApp</h3><button onclick="openModal('botwa')">Beli Sekarang</button></div>
+<div class="product"><h3>Panel FF Injektor</h3><button onclick="openModal('ffpanel')">Beli Sekarang</button></div>
+<div class="product"><h3>APK Surxrat</h3><button onclick="openModal('surxrat')">Beli Sekarang</button></div>
+<div class="product"><h3>Jasweb</h3><button onclick="openModal('jasweb')">Beli Sekarang</button></div>
+<div class="product"><h3>Panel Pterodactyl</h3><button onclick="openModal('ptero')">Beli Sekarang</button></div>
+
+</div>
+</div>
+
+<!-- MODAL -->
+<div id="modal">
+<div class="modal-box">
+<h3>Form Pembelian</h3>
+<input id="nama" placeholder="Nama Pembeli">
+<select id="paket" onchange="updateHarga()"></select>
+<input id="harga" readonly placeholder="Harga">
+<button onclick="bayar()">Lanjut Bayar</button>
+
+<div id="qrisBox" style="display:none">
+<div class="qris">
+<img src="https://image2url.com/r2/bucket2/images/1767871405936-510df50a-3ca0-4573-9964-787431781a4e.jpg">
+</div>
+<div class="whatsapp">
+<a id="waLink" target="_blank">Saya Sudah Bayar</a>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+setTimeout(()=>loading.style.display="none",3000)
+
+/* JAM & TANGGAL */
+function updateTime(){
+const hari=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"]
+const bulan=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"]
+let d=new Date()
+let text=`${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()} | ${d.toLocaleTimeString()} WIB`
+document.getElementById("datetime").innerText=text
+}
+setInterval(updateTime,1000); updateTime();
+
+/* LOGIN */
+function login(){
+if(user.value&&pass.value){
+auth.style.display="none"
+website.style.display="block"
+}else alert("Isi login!")
+}
+
+/* PRODUK DATA */
+const produkData={
+apkbug:[
+["1 Bulan - Rp 15.000","15000"],["1 Bulan - Rp 25.000","25000"],
+["1 Bulan - Rp 35.000","35000"],["Permanen - Rp 35.000","35000"],
+["Permanen - Rp 50.000","50000"],["Permanen - Rp 135.000","135000"]],
+fledrag:[["Rp 15.000","15000"]],
+flebadan:[["Rp 35.000","35000"]],
+dadahs:[["Rp 50.000","50000"]],
+bannedwa:[["Rp 15.000","15000"]],
+botwa:[
+["3 Jam - Rp 2.000","2000"],["5 Jam - Rp 3.000","3000"],
+["12 Jam - Rp 7.000","7000"],["24 Jam - Rp 11.000","11000"]],
+ffpanel:[["1 Bulan - Rp 25.000","25000"],["Permanen - Rp 50.000","50000"]],
+surxrat:[["Permanen - Rp 15.000","15000"]],
+jasweb:[["Rp 10.000","10000"]],
+ptero:[
+["1GB - Rp 500","500"],["2GB - Rp 2.500","2500"],
+["3GB - Rp 3.500","3500"],["5GB - Rp 5.000","5000"],
+["7GB - Rp 8.000","8000"],["Unlimited - Rp 14.600","14600"]]
+}
+
+let currentProduk=""
+
+function openModal(p){
+currentProduk=p
+modal.style.display="flex"
+paket.innerHTML='<option value="">Pilih Paket</option>'
+produkData[p].forEach(x=>{
+paket.innerHTML+=`<option value="${x[1]}">${x[0]}</option>`
+})
+harga.value=""
+qrisBox.style.display="none"
+}
+
+function updateHarga(){
+harga.value="Rp "+Number(paket.value).toLocaleString("id-ID")
+}
+
+function bayar(){
+if(!nama.value||!paket.value){alert("Lengkapi data");return}
+qrisBox.style.display="block"
+let msg=`Halo Admin Fiz Market,%0ATanggal: ${document.getElementById("datetime").innerText}%0ANama: ${nama.value}%0AProduk: ${currentProduk}%0APaket: ${paket.options[paket.selectedIndex].text}%0AHarga: ${harga.value}%0ASaya sudah bayar.`
+waLink.href=`https://wa.me/6283172916537?text=${msg}`
+}
+
+window.onclick=e=>{if(e.target==modal)modal.style.display="none"}
+</script>
+
+</body>
+</html>
